@@ -131,7 +131,7 @@ export function ChatShell() {
 
   const statusLabel =
     status === "connected"
-      ? "Ready"
+      ? "Connected"
       : ["connecting", "reconnecting"].includes(status)
         ? "Connecting"
         : "Connection unavailable";
