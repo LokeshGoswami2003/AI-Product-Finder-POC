@@ -1,7 +1,10 @@
 import assert from 'node:assert/strict'
 import test from 'node:test'
 
-import { parseAnswerBlocks } from '../src/lib/format-answer.js'
+import {
+  parseAnswerBlocks,
+  presentAnswerHeading,
+} from '../src/lib/format-answer.js'
 
 test('assistant answer formatting preserves headings, bullets, and paragraphs', () => {
   const blocks = parseAnswerBlocks(
@@ -18,4 +21,10 @@ test('assistant answer formatting preserves headings, bullets, and paragraphs', 
     { type: 'heading', text: 'Next step' },
     { type: 'paragraph', text: 'Confirm the feed gas composition.' },
   ])
+})
+
+test('next-step headings use a friendlier conversational label', () => {
+  assert.equal(presentAnswerHeading('Next step'), 'Keep exploring')
+  assert.equal(presentAnswerHeading('NEXT STEP'), 'Keep exploring')
+  assert.equal(presentAnswerHeading('Why it fits'), 'Why it fits')
 })

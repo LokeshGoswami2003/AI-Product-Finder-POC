@@ -1,4 +1,4 @@
-import { parseAnswerBlocks } from '../lib/format-answer'
+import { parseAnswerBlocks, presentAnswerHeading } from '../lib/format-answer'
 
 function renderInlineText(text) {
   return text.split(/(\*\*[^*]+\*\*)/).map((part, index) =>
@@ -9,11 +9,26 @@ function renderInlineText(text) {
 }
 
 export function FormattedAnswer({ content }) {
+  const blocks = parseAnswerBlocks(content)
+
   return (
     <div className="message-content message-content--formatted">
-      {parseAnswerBlocks(content).map((block, index) => {
+      {blocks.map((block, index) => {
+        const followsNextStep =
+          index > 0 &&
+          blocks[index - 1].type === 'heading' &&
+          /^next step$/i.test(blocks[index - 1].text.trim())
+
         if (block.type === 'heading') {
-          return <h3 key={`${block.type}-${index}`}>{renderInlineText(block.text)}</h3>
+          const isNextStep = /^next step$/i.test(block.text.trim())
+          return (
+            <h3
+              className={isNextStep ? 'follow-up-heading' : undefined}
+              key={`${block.type}-${index}`}
+            >
+              {renderInlineText(presentAnswerHeading(block.text))}
+            </h3>
+          )
         }
         if (block.type === 'list') {
           return (
@@ -24,7 +39,14 @@ export function FormattedAnswer({ content }) {
             </ul>
           )
         }
-        return <p key={`${block.type}-${index}`}>{renderInlineText(block.text)}</p>
+        return (
+          <p
+            className={followsNextStep ? 'follow-up-prompt' : undefined}
+            key={`${block.type}-${index}`}
+          >
+            {renderInlineText(block.text)}
+          </p>
+        )
       })}
     </div>
   )

@@ -47,3 +47,7 @@ export function parseAnswerBlocks(content) {
   flushBullets()
   return blocks
 }
+
+export function presentAnswerHeading(text) {
+  return /^next step$/i.test(text.trim()) ? 'Keep exploring' : text
+}

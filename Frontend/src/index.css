@@ -507,6 +507,24 @@ a {
   letter-spacing: 0.02em;
 }
 
+.message-content--formatted .follow-up-heading {
+  margin-top: 0.15rem;
+  padding: 0.65rem 0.7rem 0;
+  border-left: 3px solid var(--eastman-cyan);
+  border-radius: 0.4rem 0.4rem 0 0;
+  color: var(--eastman-blue-dark);
+  background: #f1f9fb;
+}
+
+.message-content--formatted .follow-up-prompt {
+  margin-top: -0.55rem;
+  padding: 0.35rem 0.7rem 0.65rem;
+  border-left: 3px solid var(--eastman-cyan);
+  border-radius: 0 0 0.4rem 0.4rem;
+  color: #334a58;
+  background: #f1f9fb;
+}
+
 .message-content--formatted ul {
   display: grid;
   gap: 0.3rem;
